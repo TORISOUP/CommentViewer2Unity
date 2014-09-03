@@ -4,13 +4,11 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using UnityEngine;
 
 namespace CommentViewer2Unity
 {
     /// <summary>
-    /// あんこちゃんにSocketを繋いで通信するクラス
-    /// Unity非依存なのでDebug.Logだけ消せば他での使える
+    /// コメビュに繋いで通信するクラス
     /// </summary>
     public class CommentViewerToUnityClient
     {
@@ -57,7 +55,7 @@ namespace CommentViewer2Unity
                 }
                 catch (Exception e)
                 {
-                    //もみ消し
+                    //nice catch!
                 }
             }));
             thread.Start();
@@ -85,7 +83,6 @@ namespace CommentViewer2Unity
             catch (Exception e)
             {
                 Disconnect();
-                Debug.Log(e.Message);
             }
         }
 
