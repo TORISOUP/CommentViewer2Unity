@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Ankochan2Unity
+namespace CommentViewer2Unity
 {
     public class Sample : MonoBehaviour
     {
-        AnkoChanComponent ankochan;
+        CommentViewerToUnityComponent commentViewerComponent;
         
         void Start()
         {
-            this.ankochan = GetComponent<AnkoChanComponent>();
-            ankochan.SetMessageRecievedHandler(MessageRecievedHandler);
+            this.commentViewerComponent = GetComponent<CommentViewerToUnityComponent>();
+            commentViewerComponent.SetMessageRecievedHandler(MessageRecievedHandler);
         }
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace Ankochan2Unity
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void MessageRecievedHandler(object sender, MessageRecievedEventArgs e)
+        void MessageRecievedHandler(object sender, CommentInfoRecievedEventArgs e)
         {
             Debug.Log(e.commentInfo.Hiragana);
         }

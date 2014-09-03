@@ -5,13 +5,13 @@ using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
 
-namespace Ankochan2Unity
+namespace CommentViewer2Unity
 {
     /// <summary>
     /// あんこちゃんにSocketを繋いで通信するクラス
     /// Unity非依存なのでDebug.Logだけ消せば他での使える
     /// </summary>
-    public class AnkochanClient
+    public class CommentViewerToUnityClient
     {
         private String hostIp;
         private int hostPort;
@@ -22,7 +22,7 @@ namespace Ankochan2Unity
         /// メッセージ受信時に発行されるイベント
         /// </summary>
         public event MessageRecievedHandler messageRecievedEvent;
-        public delegate void MessageRecievedHandler(object sender, MessageRecievedEventArgs e);
+        public delegate void MessageRecievedHandler(object sender, CommentInfoRecievedEventArgs e);
 
         /// <summary>
         /// コネクションを張った状態であるか？
@@ -37,7 +37,7 @@ namespace Ankochan2Unity
         /// </summary>
         /// <param name="hostIp">ホストIP</param>
         /// <param name="hostPort">ホストポート</param>
-        public AnkochanClient(string hostIp, int hostPort)
+        public CommentViewerToUnityClient(string hostIp, int hostPort)
         {
             this.hostIp = hostIp;
             this.hostPort = hostPort;
@@ -79,7 +79,7 @@ namespace Ankochan2Unity
                 var commentInfo = LitJson.JsonMapper.ToObject<CommentInfo>(recievedMessage);
                 
                 //イベント通知
-                messageRecievedEvent(this, new MessageRecievedEventArgs(commentInfo));
+                messageRecievedEvent(this, new CommentInfoRecievedEventArgs(commentInfo));
                 
                 //次の受信待機
                 tcpClient.GetStream().BeginRead(buffer, 0, buffer.Length, new AsyncCallback(CallBackBeginReceive), null);

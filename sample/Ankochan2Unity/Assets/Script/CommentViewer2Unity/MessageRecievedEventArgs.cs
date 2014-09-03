@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Ankochan2Unity
+namespace CommentViewer2Unity
 {
-    public class MessageRecievedEventArgs : EventArgs
+    public class CommentInfoRecievedEventArgs : EventArgs
     {
         public CommentInfo commentInfo;
-        public MessageRecievedEventArgs(CommentInfo commentInfo)
+        public CommentInfoRecievedEventArgs(CommentInfo commentInfo)
         {
             this.commentInfo = commentInfo;
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Ankochan2Unity
+namespace CommentViewer2Unity
 {
     public class CommentInfo
     {
