@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using UnityEngine;
 
 namespace CommentViewer2Unity
@@ -24,9 +25,6 @@ namespace CommentViewer2Unity
         public event MessageRecievedHandler messageRecievedEvent;
         public delegate void MessageRecievedHandler(object sender, CommentInfoRecievedEventArgs e);
 
-        /// <summary>
-        /// コネクションを張った状態であるか？
-        /// </summary>
         public bool isConnected
         {
             get { return this.tcpClient != null && this.tcpClient.Connected; }
@@ -45,57 +43,57 @@ namespace CommentViewer2Unity
         }
 
         /// <summary>
-        /// あんこちゃんに接続を試みる
-        /// 失敗したら例外飛びます
+        /// コメビュに接続を試みる
         /// </summary>
-        public bool Connect()
+        public void Connect()
         {
-            tcpClient = new TcpClient(hostIp, hostPort);
-            tcpClient.GetStream().BeginRead(buffer, 0, buffer.Length, new AsyncCallback(CallBackBeginReceive), null);
-
-            return tcpClient.Connected;
+            //コネクト時にプチフリするのを防ぐために別スレッドで起動する
+            var thread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    tcpClient = new TcpClient(hostIp, hostPort);
+                    tcpClient.GetStream().BeginRead(buffer, 0, buffer.Length, new AsyncCallback(CallBackBeginReceive), null);
+                }
+                catch (Exception e)
+                {
+                    //もみ消し
+                }
+            }));
+            thread.Start();
         }
 
-        /// <summary>
-        /// パケット受信時のコールバック
-        /// </summary>
-        /// <param name="ar"></param>
         private void CallBackBeginReceive(IAsyncResult ar)
         {
             try
             {
                 var bytes = this.tcpClient.GetStream().EndRead(ar);
+
                 if (bytes == 0)
                 {
-                    //bytesが０はソケットが切れている
+                    //接続断
                     Disconnect();
                     return;
                 }
 
-                //メッセージを文字列に変換
                 String recievedMessage = Encoding.UTF8.GetString(buffer, 0, bytes);
-
-                //JSONをCommentInfoにマッピング
                 var commentInfo = LitJson.JsonMapper.ToObject<CommentInfo>(recievedMessage);
-                
                 //イベント通知
                 messageRecievedEvent(this, new CommentInfoRecievedEventArgs(commentInfo));
-                
-                //次の受信待機
                 tcpClient.GetStream().BeginRead(buffer, 0, buffer.Length, new AsyncCallback(CallBackBeginReceive), null);
-                
             }
             catch (Exception e)
             {
-                Debug.LogError(e.Message);
+                Disconnect();
+                Debug.Log(e.Message);
             }
         }
 
         public void Disconnect()
         {
-            Debug.Log("Disconnect");
-            if (tcpClient != null)
+            if (tcpClient != null && tcpClient.Connected)
             {
+                tcpClient.GetStream().Close();
                 tcpClient.Close();
             }
         }

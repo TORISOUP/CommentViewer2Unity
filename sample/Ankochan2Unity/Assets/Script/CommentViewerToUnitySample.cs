@@ -3,14 +3,16 @@ using System.Collections;
 
 namespace CommentViewer2Unity
 {
-    public class Sample : MonoBehaviour
+    public class CommentViewerToUnitySample : MonoBehaviour
     {
         CommentViewerToUnityComponent commentViewerComponent;
         
         void Start()
         {
             this.commentViewerComponent = GetComponent<CommentViewerToUnityComponent>();
-            commentViewerComponent.SetMessageRecievedHandler(MessageRecievedHandler);
+            
+            //イベントハンドラ登録
+            commentViewerComponent .SetMessageRecievedHandler(MessageRecievedHandler);
         }
 
         /// <summary>

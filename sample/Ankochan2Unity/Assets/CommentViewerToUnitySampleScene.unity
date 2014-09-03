@@ -85,6 +85,8 @@ GameObject:
   - 114: {fileID: 1604734661}
   - 114: {fileID: 1604734660}
   - 114: {fileID: 1604734662}
+  - 114: {fileID: 1604734663}
+  - 114: {fileID: 1604734664}
   m_Layer: 0
   m_Name: SampleObject
   m_TagString: Untagged
@@ -135,5 +137,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f69ed17191b200b4d8f114d3b17103d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commentViewerComponent: {fileID: 0}
+--- !u!114 &1604734663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1604734658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42b115d17410f646af56033c4e3c345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reconnectTimeSpan: 2
+--- !u!114 &1604734664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1604734658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d58b82b35a6aa4789453b487cdff13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
