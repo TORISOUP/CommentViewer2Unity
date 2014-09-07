@@ -16,6 +16,5 @@ namespace CommentViewer2Unity
         public int? Premium;
         public string ProfName;
         public string UserId;
-        public string Hiragana;
     }
 }

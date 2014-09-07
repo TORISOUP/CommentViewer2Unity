@@ -22,7 +22,7 @@ namespace CommentViewer2Unity
         /// <param name="e"></param>
         void MessageRecievedHandler(object sender, CommentInfoRecievedEventArgs e)
         {
-            Debug.Log(e.commentInfo.Hiragana);
+            Debug.Log(e.commentInfo.Message);
         }
 
     }
